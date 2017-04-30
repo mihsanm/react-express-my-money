@@ -1,12 +1,12 @@
 const _ = require('lodash')
 
-var parseErrors = function (restfulErrors) {
+const parseErrors = restfulErrors => {
     const err = []
     _.forIn(restfulErrors, error => err.push(error.message))
     return err
 }
 
-module.exports = function (req, res, next) {
+module.exports = (req, res, next) => {
     const bundle = res.locals.bundle
 
     if (bundle.errors) {

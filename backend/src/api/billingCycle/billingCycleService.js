@@ -9,8 +9,8 @@ BillingCycle
     .after('get', errorHandler)
     .after('delete', errorHandler)
 
-BillingCycle.route('count', function (req, res, next) {
-    BillingCycle.count(function (error, value) {
+BillingCycle.route('count', (req,res,next) => {
+    BillingCycle.count((error, value) => {
         if (error) {
             res.status(500).json({ errors: [error] })
         } else {
@@ -19,18 +19,18 @@ BillingCycle.route('count', function (req, res, next) {
     })
 })
 
-BillingCycle.route('summary', function (req, res, next) {
+BillingCycle.route('summary', (req, res, next) => {
     BillingCycle.aggregate(
         { $project: { credit: { $sum: "$credits.value" }, debt: { $sum: "$debts.value" } } },
         { $group: { _id: null, credit: { $sum: "$credit" }, debt: { $sum: "$debt" } } },
         { $project: { _id: 0, credit: 1, debt: 1 } }
-        , function (error, result) {
+        , (error, result) => {
             if (error) {
                 res.status(500).json({ errors: [error] })
             } else {
                 res.json(result[0] || { credit: 0, debt: 0 })
             }
-        })
+    })
 })
 
 module.exports = BillingCycle

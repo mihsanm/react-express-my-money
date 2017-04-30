@@ -1,4 +1,4 @@
-module.exports = function(req, res, next) {
+module.exports = (req, res, next) => {
     resp
         .header('Access-Control-Allow-Origin', '*')
         .header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUTH, PATCH, DELETE')
